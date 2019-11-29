@@ -12,12 +12,15 @@
 <body>
   <div id="navbar"></div>
   <div class="center-content page-container">
-    <div>hello, zing</div>
+
     <div class="progress" id="loader">
       <div class="indeterminate"></div>
     </div>
     <div style="position: relative" class="margin">
-      <!--<video onloadedmetadata="onPlay(this)" id="inputVideo" autoplay muted playsinline></video>-->
+      <!--
+      <video src="bbt.mp4" id="inputVideo" autoplay muted loop playsinline></video>
+      <canvas id="overlay" />
+      -->
       <video onplay="onPlay(this)" id="inputVideo" autoplay muted></video>
       <canvas id="overlay" />
     </div>
@@ -35,6 +38,15 @@
       </div>
       <!-- face_detector_selection_control -->
 
+      <!-- check boxes -->
+      <div class="row" style="width: 220px;">
+        <input type="checkbox" id="withFaceLandmarksCheckbox" onchange="onChangeWithFaceLandmarks(event)" />
+        <label for="withFaceLandmarksCheckbox">Detect Face Landmarks</label>
+        <input type="checkbox" id="hideBoundingBoxesCheckbox" onchange="onChangeHideBoundingBoxes(event)" />
+        <label for="hideBoundingBoxesCheckbox">Hide Bounding Boxes</label>
+      </div>
+      <!-- check boxes -->
+
       <!-- fps_meter -->
       <div id="fps_meter" class="row side-by-side">
         <div>
@@ -47,7 +59,6 @@
       <!-- fps_meter -->
 
     </div>
-
 
     <!-- ssd_mobilenetv1_controls -->
     <span id="ssd_mobilenetv1_controls">
@@ -78,7 +89,6 @@
         <div class="row input-field" style="margin-right: 20px;">
           <select id="inputSize">
             <option value="" disabled selected>Input Size:</option>
-            <option value="128">128 x 128</option>
             <option value="160">160 x 160</option>
             <option value="224">224 x 224</option>
             <option value="320">320 x 320</option>
@@ -135,6 +145,16 @@
 
   <script>
     let forwardTimes = []
+    let withFaceLandmarks = false
+    let withBoxes = true
+
+    function onChangeWithFaceLandmarks(e) {
+      withFaceLandmarks = $(e.target).prop('checked')
+    }
+
+    function onChangeHideBoundingBoxes(e) {
+      withBoxes = !$(e.target).prop('checked')
+    }
 
     function updateTimeStats(timeInMs) {
       forwardTimes = [timeInMs].concat(forwardTimes).slice(0, 30)
@@ -143,71 +163,114 @@
       $('#fps').val(`${faceapi.round(1000 / avgTimeInMs)}`)
     }
 
-    async function onPlay() {
-      const videoEl = $('#inputVideo').get(0)
-
-      //if(videoEl.paused || videoEl.ended || !isFaceDetectionModelLoaded())
-      if(videoEl.paused || videoEl.ended)
-        return setTimeout(() => onPlay())
+    async function onPlay(videoEl) {
+      if(!videoEl.currentTime || videoEl.paused || videoEl.ended || !isFaceDetectionModelLoaded())
+        return setTimeout(() => onPlay(videoEl))
 
 
       const options = getFaceDetectorOptions()
 
       const ts = Date.now()
 
-      //rongji:
-      //const result = await faceapi.detectSingleFace(videoEl, options)
-      const mtcnnForwardParams = {
-        // limiting the search space to larger faces for webcam detection
-        minFaceSize: 200
-      }
-      const mtcnnResults = await faceapi.mtcnn(document.getElementById('inputVideo'), mtcnnForwardParams);
-      //const mtcnnResults = await faceapi.allFacesMtcnn(document.getElementById('inputVideo'), mtcnnForwardParams);
+      const drawBoxes = withBoxes
+      const drawLandmarks = withFaceLandmarks
+
+      /*
+      let task = faceapi.detectAllFaces(videoEl, options)
+      task = withFaceLandmarks ? task.withFaceLandmarks() : task
+      const results = await task
 
       updateTimeStats(Date.now() - ts)
 
-      //rongji:
-      // if (result) {
-      //   const canvas = $('#overlay').get(0)
-      //   const dims = faceapi.matchDimensions(canvas, videoEl, true)
-      //   faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims))
-      // }
-      if (mtcnnResults) {
-        const canvas = $('#overlay').get(0)
-        const dims = faceapi.matchDimensions(canvas, videoEl, true)
-        faceapi.draw.drawDetections('overlay', mtcnnResults.map(res => res.detection), { withScore: false })
-        faceapi.draw.drawFaceLandmarks('overlay', mtcnnResults.map(res => res.landmarks), { lineWidth: 4, color: 'red' })
-        
+      const canvas = $('#overlay').get(0)
+      const dims = faceapi.matchDimensions(canvas, videoEl, true)
+
+      const resizedResults = faceapi.resizeResults(results, dims)
+      if (drawBoxes) {
+        faceapi.draw.drawDetections(canvas, resizedResults)
+      }
+      if (drawLandmarks) {
+        faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
       }
 
-      /*
-      const mtcnnOptions = new faceapi.MtcnnOptions(options)
-      const input = document.getElementById('inputVideo')
-      const fullFaceDescriptions = await faceapi.detectAllFaces(input, mtcnnOptions).withFaceLandmarks().withFaceDescriptors()
+      setTimeout(() => onPlay(videoEl))
       */
 
-      const labels = ['sheldon', 'raj', 'leonard', 'howard']
+      // var fullFaceDescription = null
 
+      // const labels = ['sheldon', 'raj', 'leonard', 'howard']
+      const labels = ['raj']
       const labeledFaceDescriptors = await Promise.all(
         labels.map(async label => {
           // fetch image data from urls and convert blob to HTMLImage element
           const imgUrl = `${label}/${label}1.png`
           const img = await faceapi.fetchImage(imgUrl)
           
+          const options = getFaceDetectorOptions()
+
           // detect the face with the highest score in the image and compute it's landmarks and face descriptor
-          const fullFaceDescription = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+          const fullFaceDescription = await faceapi
+  .detectAllFaces(img, options)
+  .withFaceLandmarks()
+  .withFaceDescriptors()
+          // const fullFaceDescription = await faceapi.detectAllFaces(img, options).withFaceLandmarks().withFaceDescriptors()
+          //const fullFaceDescription = await faceapi.detectSingleFace(img, new faceapi.SsdMobilenetv1Options()).withFaceLandmarks().withFaceDescriptor()
           
-          if (!fullFaceDescription) {
-            throw new Error(`no faces detected for ${label}`)
-          }
+          // if (!fullFaceDescription) {
+          //   throw new Error(`no faces detected for ${label}`)
+          // }
           
-          const faceDescriptors = [fullFaceDescription.descriptor]
+          const faceDescriptors = [fullFaceDescription[0].descriptor]
           return new faceapi.LabeledFaceDescriptors(label, faceDescriptors)
         })
       )
+      
+     /* workable2
+      const imgUrl = `raj/raj1.png`
+          const img = await faceapi.fetchImage(imgUrl)
+          const options3 = getFaceDetectorOptions()
 
-      setTimeout(() => onPlay())
+          // detect the face with the highest score in the image and compute it's landmarks and face descriptor
+          // const fullFaceDescription = await faceapi.detectSingleFace(img, options).withFaceLandmarks().withFaceDescriptor()
+          const results = await faceapi
+  .detectAllFaces(img, options3)
+  .withFaceLandmarks()
+  .withFaceDescriptors()
+*/
+      /*
+      const mtcnnForwardParams = {
+        // limiting the search space to larger faces for webcam detection
+        minFaceSize: 200
+      }
+      const options2 = new faceapi.MtcnnOptions(mtcnnForwardParams)
+      const input = document.getElementById('inputVideo')
+      const fullFaceDescriptions = await faceapi.detectAllFaces(input, options2).withFaceLandmarks().withFaceDescriptors()
+      */
+
+      const maxDescriptorDistance = 0.6
+const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, maxDescriptorDistance)
+
+const results = labeledFaceDescriptors.map(fd => faceMatcher.findBestMatch(fd.descriptors))
+      setTimeout(() => onPlay(videoEl))
+
+      results.forEach((bestMatch, i) => {
+  const box = labeledFaceDescriptors[i].detection.box
+  const text = bestMatch.toString()
+  const drawBox = new faceapi.draw.DrawBox(box, { label: text })
+  drawBox.draw(canvas)
+})
     }
+
+    /*
+    async function run() {
+      // load face detection and face landmark models
+      await changeFaceDetector(TINY_FACE_DETECTOR)
+      await faceapi.loadFaceLandmarkModel('/')
+      changeInputSize(416)
+
+      // start processing frames
+      onPlay($('#inputVideo').get(0))
+    } */
 
     async function run() {
       /*
@@ -222,10 +285,22 @@
       videoEl.srcObject = stream
       */
 
-      // load the models
-      await faceapi.loadMtcnnModel('/')
-      await faceapi.loadFaceRecognitionModel('/')
+      // load face detection and face landmark models
+      await changeFaceDetector(TINY_FACE_DETECTOR)
       await faceapi.loadFaceLandmarkModel('/')
+      // await faceapi.nets.faceLandmark68Net.loadFromUri('/models')
+      // await faceapi.nets.ssdMobilenetv1.loadFromUri('/')
+      
+      await faceapi.loadFaceRecognitionModel('/')
+      await faceapi.loadTinyFaceDetectorModel('/')
+
+      await faceapi.loadMtcnnModel('/')
+      await faceapi.loadSsdMobilenetv1Model('/')
+
+      changeInputSize(416)
+
+      // start processing frames
+      //onPlay($('#inputVideo').get(0))
       
       // try to access users webcam and stream the images
       // to the video element
@@ -240,10 +315,11 @@
     function updateResults() {}
 
     $(document).ready(function() {
-      renderNavBar('#navbar', 'webcam_face_detection')
+      renderNavBar('#navbar', 'video_face_tracking')
       initFaceDetectionControls()
       run()
     })
+    
   </script>
 </body>
 </html>

@@ -95,6 +95,14 @@ function renderNavBar(navbarId, exampleUri) {
     {
       uri: 'wc',
       name: 'Test Web Cam'
+    },
+    {
+      uri: 'wc_face_recog',
+      name: 'Webcam Face Recognition'
+    },
+    {
+      uri: 'wc_face_recog2',
+      name: 'Webcam Face Recognition2'
     }
   ]
 
