@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="face-api.js"></script>
-  <script src="js/commons.js"></script>
-  <script src="js/faceDetectionControls.js"></script>
-  <!-- <script src="js/imageSelectionControls.js"></script> -->
-  <script src="js/bbt.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <script src="js/face-api/face-api.js"></script>
+  <script src="js/face-api/commons.js"></script>
+  <script src="js/face-api/faceDetectionControls.js"></script>
+  <script src="js/face-api/imageSelectionControls.js"></script>
+  <script src="js/face-api/bbt.js"></script>
+  <link rel="stylesheet" href="style/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </head>
 <body>
-  <!-- <div id="navbar"></div> -->
+  <div id="navbar"></div>
   <div class="center-content page-container">
 
     <div class="progress" id="loader">
@@ -253,8 +253,8 @@
     }
 
     $(document).ready(function() {
-      // renderNavBar('#navbar', 'bbt_face_recognition')
-      // initImageSelectionControls()
+      renderNavBar('#navbar', 'bbt_face_recognition')
+      initImageSelectionControls()
       initFaceDetectionControls()
       run()
     })
