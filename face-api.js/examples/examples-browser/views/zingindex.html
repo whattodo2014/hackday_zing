@@ -1,0 +1,558 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+    <title>Zing-Face</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link href="/zing_styles/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/zing_styles/style.css" rel="stylesheet" type="text/css">
+    <link href="/zing_styles/linecons.css" rel="stylesheet" type="text/css">
+    <link href="/zing_styles/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="/zing_styles/responsive.css" rel="stylesheet" type="text/css">
+    <link href="/zing_styles/animate.css" rel="stylesheet" type="text/css">
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,900,700,700italic,400italic,300italic,300,100italic,100,900italic'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Dosis:400,500,700,800,600,300,200' rel='stylesheet'
+          type='text/css'>
+
+    <!-- =======================================================
+    Theme Name: Butterfly
+    Theme URL: https://bootstrapmade.com/butterfly-free-bootstrap-theme/
+    Author: BootstrapMade
+    Author URL: https://bootstrapmade.com
+    ======================================================= -->
+
+    <!-- <script type="text/javascript" src="js/jquery.1.8.3.min.js"></script> -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/zing_js/bootstrap.js"></script>
+    <script type="text/javascript" src="/zing_js/jquery-scrolltofixed.js"></script>
+    <script type="text/javascript" src="/zing_js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="/zing_js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="/zing_js/wow.js"></script>
+    <script type="text/javascript" src="/zing_js/classie.js"></script>
+
+    <!--face-api.js start-->
+    <script src="face-api.js"></script>
+    <script src="js/commons.js"></script>
+    <script src="js/faceDetectionControls.js"></script>
+    <!-- <script src="js/imageSelectionControls.js"></script> -->
+    <script src="js/bbt.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <!--face-api.js end-->
+
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('.res-nav_click').click(function () {
+                $('ul.toggle').slideToggle(600)
+            });
+
+            $(document).ready(function () {
+                $(window).bind('scroll', function () {
+                    if ($(window).scrollTop() > 0) {
+                        $('#header_outer').addClass('fixed');
+                    } else {
+                        $('#header_outer').removeClass('fixed');
+                    }
+                });
+
+            });
+
+
+        });
+
+        function resizeText() {
+            var preferredWidth = 767;
+            var displayWidth = window.innerWidth;
+            var percentage = displayWidth / preferredWidth;
+            var fontsizetitle = 25;
+            var newFontSizeTitle = Math.floor(fontsizetitle * percentage);
+            $(".divclass").css("font-size", newFontSizeTitle)
+        }
+    </script>
+</head>
+
+<body>
+
+<!--Header_section-->
+<header id="header_outer">
+    <div class="container">
+        <div class="header_section">
+            <div class="logo"><a href="javascript:void(0)"><img src="img/logob.png" alt=""></a></div>
+            <nav class="nav" id="nav">
+                <ul class="toggle">
+                    <li><a href="#top_content">Home</a></li>
+                    <li><a href="#service">Services</a></li>
+                    <li><a href="#work_outer">Work</a></li>
+                    <li><a href="#Portfolio">Portfolio</a></li>
+                    <li><a href="#client_outer">Clients</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <ul class="">
+                    <li><a href="#top_content">Home</a></li>
+                    <li><a href="#service">Services</a></li>
+                    <li><a href="#work_outer">Work</a></li>
+                    <li><a href="#Portfolio">Portfolio</a></li>
+                    <li><a href="#client_outer">Clients</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <a class="res-nav_click animated wobble wow" href="javascript:void(0)"><i class="fa-bars"></i></a></div>
+    </div>
+</header>
+<!--Header_section-->
+
+<!--Top_content-->
+<section id="top_content" class="top_cont_outer">
+    <div>
+        <div class="container">
+            <div class="top_content">
+                <div class="row">
+                    <div class="col-lg-5 col-sm-7">
+                        <div class="top_left_cont flipInY wow animated">
+                            <h3>Zing!Face</h3>
+                            <h2>Hi,Ruotong</h2>
+                            <!--<p> Accusantium quam, aliquam ultricies eget tempor id, aliquam eget nibh et. Maecen aliquam, risus at semper. Proin iaculis purus consequat sem cure digni ssim. Donec porttitora entum. </p>-->
+                            <a href="#service" class="learn_more2">Learn more</a></div>
+                    </div>
+                    <div class="col-lg-7 col-sm-5">
+                            <!-- <div class="center-content page-container"> -->
+                            <div class="">
+
+
+                                    <div class="progress" id="loader">
+                                      <div class="indeterminate"></div>
+                                    </div>
+                                
+                                    <div style="position: relative" class="margin">
+                                      <video onplay="onPlay(this)" id="inputVideo" autoplay muted></video>
+                                      <canvas id="overlay" />
+                                    </div>
+                                
+                                  
+                                  </div>
+                        <!--
+                        <video autoplay="" muted="" playsinline="" style="border-radius: 5px; width:100%"></video>
+
+                        <script async="" src="./js/main.js"></script>
+
+                        <div class="select">
+                            <label for="audioSource">Audio source: </label><select id="audioSource">
+                            <option value="default">Default - Microphone Array (Realtek Audio)</option>
+                            <option value="communications">Communications - Microphone Array (Realtek Audio)</option>
+                            <option value="87c08a4480ad3fb971550af172815b216f76d05fd0982009231010503e1231f2">Microphone
+                                Array (Realtek Audio)
+                            </option>
+                        </select>
+                        </div>
+
+                        <div class="select">
+                            <label for="videoSource">Video source: </label><select id="videoSource">
+                            <option value="d080f6126e231632db8c0a8f490c7e2f6f5396b269fcf10bf36353db2de124bb"></option>
+                        </select>
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Top_content-->
+
+<!--Service-->
+<section id="service">
+    <div class="container">
+        <!--<h2>Services</h2>-->
+        <div class="service_area">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="service_block">
+                        <div class="service_icon delay-03s animated wow zoomIn">
+                            <span><a href="https://www.moodys.com/"><i class="fa-book" href=""></i></a></span>
+                        </div>
+                        <!--<h3 class="animated fadeInUp wow">Quick TurnAround</h3>-->
+                        <h3>Borrow</h3>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="service_block">
+                        <div class="service_icon icon2  delay-03s animated wow zoomIn"><span><i class="fa-book"></i></span>
+                        </div>
+                        <h3>Return</h3>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="service_block">
+                        <div class="service_icon icon3  delay-03s animated wow zoomIn"><span><i
+                                class="fa-recycle"></i></span></div>
+                        <h3>Donate</h3>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="service_block">
+                        <div class="service_icon icon4  delay-03s animated wow zoomIn"><span><i
+                                class="fa-search"></i></span></div>
+                        <h3>Search</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+        <div class="row side-by-side">
+                                
+                <!-- face_detector_selection_control -->
+                <div id="face_detector_selection_control" class="row input-field" style="margin-right: 20px;">
+                  <select id="selectFaceDetector">
+                    <option value="ssd_mobilenetv1">SSD Mobilenet V1</option>
+                    <option value="tiny_face_detector">Tiny Face Detector</option>
+                    <option value="mtcnn">MTCNN</option>
+                  </select>
+                  <label>Select Face Detector</label>
+                </div>
+                <!-- face_detector_selection_control -->
+            
+            
+                <!-- ssd_mobilenetv1_controls -->
+                <span id="ssd_mobilenetv1_controls">
+                  <div class="row side-by-side">
+                    <div class="row">
+                      <label for="minConfidence">Min Confidence:</label>
+                      <input disabled value="0.5" id="minConfidence" type="text" class="bold">
+                    </div>
+                    <button
+                      class="waves-effect waves-light btn"
+                      onclick="onDecreaseMinConfidence()"
+                    >
+                      <i class="material-icons left">-</i>
+                    </button>
+                    <button
+                      class="waves-effect waves-light btn"
+                      onclick="onIncreaseMinConfidence()"
+                    >
+                      <i class="material-icons left">+</i>
+                    </button>
+                  </div>
+                </span>
+                <!-- ssd_mobilenetv1_controls -->
+            
+                <!-- tiny_face_detector_controls -->
+                <span id="tiny_face_detector_controls">
+                  <div class="row side-by-side">
+                    <div class="row input-field" style="margin-right: 20px;">
+                      <select id="inputSize">
+                        <option value="" disabled selected>Input Size:</option>
+                        <option value="160">160 x 160</option>
+                        <option value="224">224 x 224</option>
+                        <option value="320">320 x 320</option>
+                        <option value="416">416 x 416</option>
+                        <option value="512">512 x 512</option>
+                        <option value="608">608 x 608</option>
+                      </select>
+                      <label>Input Size</label>
+                    </div>
+                    <div class="row">
+                      <label for="scoreThreshold">Score Threshold:</label>
+                      <input disabled value="0.5" id="scoreThreshold" type="text" class="bold">
+                    </div>
+                    <button
+                      class="waves-effect waves-light btn"
+                      onclick="onDecreaseScoreThreshold()"
+                    >
+                      <i class="material-icons left">-</i>
+                    </button>
+                    <button
+                      class="waves-effect waves-light btn"
+                      onclick="onIncreaseScoreThreshold()"
+                    >
+                      <i class="material-icons left">+</i>
+                    </button>
+                  </div>
+                </span>
+                <!-- tiny_face_detector_controls -->
+            
+                <!-- mtcnn_controls -->
+                <span id="mtcnn_controls">
+                  <div class="row side-by-side">
+                    <div class="row">
+                      <label for="minFaceSize">Minimum Face Size:</label>
+                      <input disabled value="20" id="minFaceSize" type="text" class="bold">
+                    </div>
+                    <button
+                      class="waves-effect waves-light btn"
+                      onclick="onDecreaseMinFaceSize()"
+                    >
+                      <i class="material-icons left">-</i>
+                    </button>
+                    <button
+                      class="waves-effect waves-light btn"
+                      onclick="onIncreaseMinFaceSize()"
+                    >
+                      <i class="material-icons left">+</i>
+                    </button>
+                  </div>
+                </span>
+                <!-- mtcnn_controls -->
+              </div>
+</section>
+<!--Service-->
+
+<!--twitter-feed-end-->
+<footer class="footer_section" id="contact">
+
+</footer>
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        $('#header_outer').scrollToFixed();
+        $('.res-nav_click').click(function () {
+            $('.main-nav').slideToggle();
+            return false
+
+        });
+
+    });
+</script>
+<script>
+    wow = new WOW({
+        animateClass: 'animated',
+        offset: 100
+    });
+    wow.init();
+    document.getElementById('').onclick = function () {
+        var section = document.createElement('section');
+        section.className = 'wow fadeInDown';
+        section.className = 'wow shake';
+        section.className = 'wow zoomIn';
+        section.className = 'wow lightSpeedIn';
+        this.parentNode.insertBefore(section, this);
+    };
+</script>
+<script type="text/javascript">
+    $(window).load(function () {
+
+        $('a').bind('click', function (event) {
+            var $anchor = $(this);
+
+            $('html, body').stop().animate({
+                scrollTop: $($anchor.attr('href')).offset().top - 91
+            }, 1500, 'easeInOutExpo');
+            /*
+            if you don't want to use the easing effects:
+            $('html, body').stop().animate({
+                scrollTop: $($anchor.attr('href')).offset().top
+            }, 1000);
+            */
+            event.preventDefault();
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        // Portfolio Isotope
+        var container = $('#portfolio-wrap');
+
+
+        container.isotope({
+            animationEngine: 'best-available',
+            animationOptions: {
+                duration: 200,
+                queue: false
+            },
+            layoutMode: 'fitRows'
+        });
+
+        $('#filters a').click(function () {
+            $('#filters a').removeClass('active');
+            $(this).addClass('active');
+            var selector = $(this).attr('data-filter');
+            container.isotope({
+                filter: selector
+            });
+            setProjects();
+            return false;
+        });
+
+
+        function splitColumns() {
+            var winWidth = $(window).width(),
+                columnNumb = 1;
+
+
+            if (winWidth > 1024) {
+                columnNumb = 4;
+            } else if (winWidth > 900) {
+                columnNumb = 2;
+            } else if (winWidth > 479) {
+                columnNumb = 2;
+            } else if (winWidth < 479) {
+                columnNumb = 1;
+            }
+
+            return columnNumb;
+        }
+
+        function setColumns() {
+            var winWidth = $(window).width(),
+                columnNumb = splitColumns(),
+                postWidth = Math.floor(winWidth / columnNumb);
+
+            container.find('.portfolio-item').each(function () {
+                $(this).css({
+                    width: postWidth + 'px'
+                });
+            });
+        }
+
+        function setProjects() {
+            setColumns();
+            container.isotope('reLayout');
+        }
+
+        container.imagesLoaded(function () {
+            setColumns();
+        });
+
+
+        $(window).bind('resize', function () {
+            setProjects();
+        });
+
+    });
+    $(window).load(function () {
+        jQuery('#all').click();
+        return false;
+    });
+</script>
+<!--<script src="contactform/contactform.js"></script>-->
+
+<!--face reg-->
+
+<script>
+        let faceMatcher = null
+    
+        async function updateResults() {
+          if (!isFaceDetectionModelLoaded()) {
+            return
+          }
+    
+          const inputImgEl = $('#inputImg').get(0)
+    
+          const options = getFaceDetectorOptions()
+          const results = await faceapi
+            .detectAllFaces(inputImgEl, options)
+            .withFaceLandmarks()
+            .withFaceDescriptors()
+    
+          drawFaceRecognitionResults(results)
+        }
+    
+        async function onPlay(videoEl) {
+          if(!videoEl.currentTime || videoEl.paused || videoEl.ended || !isFaceDetectionModelLoaded())
+            return setTimeout(() => onPlay(videoEl))
+    
+    
+          const options = getFaceDetectorOptions()
+    
+          const ts = Date.now()
+    
+          /*
+          const drawBoxes = withBoxes
+          const drawLandmarks = withFaceLandmarks
+    */
+          // let task = faceapi.detectAllFaces(videoEl, options)
+          // task = withFaceLandmarks ? task.withFaceLandmarks() : task
+          // const results = await task
+    
+          const results = await faceapi
+            .detectAllFaces(videoEl, options)
+            .withFaceLandmarks()
+            .withFaceDescriptors()
+    
+          drawFaceRecognitionResults(results, videoEl)
+    /*
+          updateTimeStats(Date.now() - ts)
+    
+          const canvas = $('#overlay').get(0)
+          const dims = faceapi.matchDimensions(canvas, videoEl, true)
+    
+          const resizedResults = faceapi.resizeResults(results, dims)
+          if (drawBoxes) {
+            faceapi.draw.drawDetections(canvas, resizedResults)
+          }
+          if (drawLandmarks) {
+            faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
+          }
+    */
+          setTimeout(() => onPlay(videoEl))
+        }
+    
+        function drawFaceRecognitionResults(results, videoEl) {
+          const canvas = $('#overlay').get(0)
+          /*
+          const inputImgEl = $('#inputImg').get(0)
+    
+          faceapi.matchDimensions(canvas, inputImgEl)
+          // resize detection and landmarks in case displayed image is smaller than
+          // original size
+          const resizedResults = faceapi.resizeResults(results, inputImgEl)
+          */
+    
+          const dims = faceapi.matchDimensions(canvas, videoEl, true)
+          const resizedResults = faceapi.resizeResults(results, dims)
+    
+          resizedResults.forEach(({ detection, descriptor }) => {
+            const label = faceMatcher.findBestMatch(descriptor).toString()
+            const options = { label }
+            const drawBox = new faceapi.draw.DrawBox(detection.box, options)
+            drawBox.draw(canvas)
+          })
+        }
+    
+        async function run() {
+          // load face detection, face landmark model and face recognition models
+          await changeFaceDetector(selectedFaceDetector)
+          await faceapi.loadFaceLandmarkModel('/')
+          await faceapi.loadFaceRecognitionModel('/')
+    
+          // initialize face matcher with 1 reference descriptor per bbt character
+          faceMatcher = await createBbtFaceMatcher(1)
+    
+          // start processing image
+          //rongji
+          // updateResults()
+    
+          changeInputSize(416)
+    
+          // start processing frames
+          //onPlay($('#inputVideo').get(0))
+          
+          // try to access users webcam and stream the images
+          // to the video element
+          const videoEl = document.getElementById('inputVideo')
+          navigator.getUserMedia(
+            { video: {} },
+            stream => videoEl.srcObject = stream,
+            err => console.error(err)
+          )
+        }
+    
+        $(document).ready(function() {
+          // renderNavBar('#navbar', 'bbt_face_recognition')
+          // initImageSelectionControls()
+          initFaceDetectionControls()
+          run()
+        })
+      </script>
+
+</body>
+</html>

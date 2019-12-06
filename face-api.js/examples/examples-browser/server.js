@@ -36,7 +36,7 @@ app.get('/batch_face_recognition', (req, res) => res.sendFile(path.join(viewsDir
 app.get('/wc', (req, res) => res.sendFile(path.join(viewsDir, 'wc.html')))
 app.get('/wc_face_recog', (req, res) => res.sendFile(path.join(viewsDir, 'wcFaceRecog.html')))
 app.get('/wc_face_recog2', (req, res) => res.sendFile(path.join(viewsDir, 'wcFaceRecog2.html')))
-
+app.get('/zingindex', (req, res) => res.sendFile(path.join(viewsDir, 'zingindex.html')))
 
 app.post('/fetch_external_image', async (req, res) => {
   const { imageUrl } = req.body

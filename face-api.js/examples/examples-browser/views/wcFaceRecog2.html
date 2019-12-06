@@ -10,61 +10,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-  <style type="text/css">
   
-    .all_list_brands_title_details_btn{
-      width: 100px;
-      height: 100px;
-      text-align: center;
-      font-size: 50px;
-      line-height: 1.428571429;
-      border-radius: 50px;
-      margin-top: 60px;
-      margin-left: 60px;
-      float:left;
-      background-color: burlywood;
-      border: 1px solid #d5d5d5;
-    }
-
-    .all_list_brands_title_details_btn:hover{background:#fff; color:#22965e;}
-
-    .button{ width:180px; height:40px; text-align:center; line-height:40px;  font-size:12px; border:1px solid #FFF; margin:15px auto; padding:0 auto; border-radius:5px; display:block; color:#FFF;}
-    .button:hover{background:#fff; color:#22965e;}
-
-  </style>
 </head>
 <body>
-  <!-- <div id="navbar"></div> -->
   <div class="center-content page-container">
 
     <div class="progress" id="loader">
       <div class="indeterminate"></div>
     </div>
-    <!--
+
     <div style="position: relative" class="margin">
-      <img id="inputImg" src="" style="max-width: 800px;" />
+      <video onplay="onPlay(this)" id="inputVideo" autoplay muted></video>
       <canvas id="overlay" />
     </div>
--->
-  <div style="position: relative" class="margin">
-    <video onplay="onPlay(this)" id="inputVideo" autoplay muted></video>
-    <canvas id="overlay" />
-  </div>
-
-  <div>
-    <button className="all_list_brands_title_details_btn" id="brands_button" >
-      <span>借</span>
-    </button>
-    <button className="all_list_brands_title_details_btn" id="brands_button" >
-      <span>还</span>
-    </button>
-    <button className="all_list_brands_title_details_btn" id="brands_button" >
-      <span>享</span>
-    </button>
-    <button className="all_list_brands_title_details_btn" id="brands_button" >
-      <span>查</span>
-    </button>
-  </div>
 
   <div class="row side-by-side">
 
@@ -79,23 +37,6 @@
     </div>
     <!-- face_detector_selection_control -->
 
-    <!-- image_selection_control -->
-    <div id="image_selection_control"></div>
-      <div id="selectList"></div>
-      <div class="row">
-        <label for="imgUrlInput">Get image from URL:</label>
-        <input id="imgUrlInput" type="text" class="bold">
-      </div>
-      <button
-        class="waves-effect waves-light btn"
-        onclick="loadImageFromUrl()"
-      >
-        Ok
-      </button>
-    <div id="image_selection_control"></div>
-    <!-- image_selection_control -->
-
-    </div>
 
     <!-- ssd_mobilenetv1_controls -->
     <span id="ssd_mobilenetv1_controls">
@@ -177,6 +118,8 @@
       </div>
     </span>
     <!-- mtcnn_controls -->
+  </div>
+  </div>
 
   </body>
 
