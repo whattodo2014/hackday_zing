@@ -5,6 +5,7 @@ async function updateResults() {
         return
     }
 
+    /*
     const inputImgEl = $('#inputImg').get(0)
 
     const options = getFaceDetectorOptions()
@@ -14,6 +15,17 @@ async function updateResults() {
         .withFaceDescriptors()
 
     drawFaceRecognitionResults(results)
+*/
+    const options = getFaceDetectorOptions()
+    const videoEl = document.getElementById('inputVideo')
+    
+    const results = await faceapi
+        .detectAllFaces(videoEl, options)
+        .withFaceLandmarks()
+        .withFaceDescriptors()
+
+    var resultLabels = drawFaceRecognitionResults(results, videoEl)
+    updateLabelToUI(resultLabels, $('#recoged_name_elem').get(0))
 }
 
 async function onPlay(videoEl) {
