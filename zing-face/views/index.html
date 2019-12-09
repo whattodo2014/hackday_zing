@@ -118,7 +118,7 @@
                     <div class="col-lg-3 col-sm-7">
                         <div class="top_left_cont flipInY wow animated">
                             <h3>Zing!Face</h3>
-                            <h2>Hi, Ruotong</h2>
+                            <h2>Hi, <span id="recoged_name_elem">there</span></h2>
                             <!--<p> Accusantium quam, aliquam ultricies eget tempor id, aliquam eget nibh et. Maecen aliquam, risus at semper. Proin iaculis purus consequat sem cure digni ssim. Donec porttitora entum. </p>-->
                             <a href="#service" class="learn_more2">Learn more</a></div>
                     </div>
@@ -477,7 +477,8 @@
             .withFaceLandmarks()
             .withFaceDescriptors()
     
-          drawFaceRecognitionResults(results, videoEl)
+          var resultLabels = drawFaceRecognitionResults(results, videoEl)
+          updateLabelToUI(resultLabels, $('#recoged_name_elem').get(0))
     /*
           updateTimeStats(Date.now() - ts)
     
@@ -508,13 +509,36 @@
     
           const dims = faceapi.matchDimensions(canvas, videoEl, true)
           const resizedResults = faceapi.resizeResults(results, dims)
-    
+          var resultLabels = []
           resizedResults.forEach(({ detection, descriptor }) => {
             const label = faceMatcher.findBestMatch(descriptor).toString()
             const options = { label }
             const drawBox = new faceapi.draw.DrawBox(detection.box, options)
             drawBox.draw(canvas)
+
+            if (label) {
+                resultLabels.push(label)
+            }
           })
+
+          return resultLabels
+        }
+
+        function updateLabelToUI(resultLabels, containerElement) {
+            if (!resultLabels || resultLabels.length == 0 || !containerElement) {
+                return
+            }
+
+            var label = resultLabels[0]
+
+            if (!label || label=="") {
+                return
+            }
+
+            label = label.substring(0, label.indexOf(' '))
+            if (label !== "unknown" && label !== "") {
+                containerElement.innerHTML = label;
+            }
         }
     
         async function run() {

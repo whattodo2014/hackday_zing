@@ -1,5 +1,5 @@
 // const classes = ['fangchao', 'rongji', 'amy', 'bernadette', 'howard', 'leonard', 'penny', 'raj', 'sheldon', 'stuart']
-const classes = ['fangchao', 'rongji', 'candy', 'ruotong']
+const classes = ['fangchao', 'rongji', 'candy', 'ruotong', 'jimmy']
 
 function getFaceImageUri(className, idx) {
   return `${className}/${className}${idx}.png`
