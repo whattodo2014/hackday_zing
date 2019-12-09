@@ -14,9 +14,16 @@ app.use(express.static(path.join(__dirname, 'images')))
 app.use(express.static(path.join(__dirname, 'media')))
 app.use(express.static(path.join(__dirname, 'weights')))
 app.use(express.static(path.join(__dirname, 'dist')))
+app.use(function(req, res, next) {
+  if (req.url.startsWith('/img/') || req.url.startsWith('/fonts/') || req.url.startsWith('/data/')) {
+    req.url = `/public${req.url}`;
+  }
+  next();
+});
 
 app.get('/', (req, res) => res.redirect('/face_detection'))
 app.get('/index', (req, res) => res.sendFile(path.join(viewsDir, 'index.html')))
+app.get('/details', (req, res) => res.sendFile(path.join(viewsDir, 'details.html')))
 
 app.post('/fetch_external_image', async (req, res) => {
   const { imageUrl } = req.body
