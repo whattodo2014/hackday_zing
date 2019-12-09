@@ -196,11 +196,13 @@ function handleError(error) {
 $(document).ready(function () {
     // renderNavBar('#navbar', 'bbt_face_recognition')
     // initImageSelectionControls()
-    initFaceDetectionControls()
-    run()
+    initFaceDetectionControls();
+    run();
+    barcodeHandler.init();
+    bookHandler.loadBookInfo();
 })
 
-const barcodeHandler = () => {
+var barcodeHandler = (function() {
     var BarcodesScanner = {
         barcodeData: '',
         deviceId: '',
@@ -233,29 +235,53 @@ const barcodeHandler = () => {
     var handleBancodeChange = () => {
         var barcode = BarcodesScanner.tmpData;
         console.log(barcode);
-        document.querySelector("#book_info").innerHTML = barcode;
+        var bookInfo = bookHandler.getBookInfo(barcode);
+        var bookInfoText = bookInfo ? bookInfo.details.join('</br>') : barcode;
+        document.querySelector("#book_info").innerHTML = bookInfoText;
     };
     
     const barcodeChange = debounce(handleBancodeChange, 200);
     
-    $(document).on('keypress', function (e) {
-        e.stopPropagation();
-        if (BarcodesScanner.tmpTimestamp < Date.now() - 500) {
-            BarcodesScanner.tmpData = '';
-            BarcodesScanner.tmpTimestamp = Date.now();
-        }
-        if (e.charCode && e.charCode > 0) {
-            BarcodesScanner.tmpData += String.fromCharCode(e.charCode);
-        }
-        // var keycode = (e.keyCode ? e.keyCode : e.which);
-        // if (keycode == 13 && BarcodesScanner.tmpData.length > 0){
-        //     onScannerNavigate(BarcodesScanner.tmpData, 'FAKE_SCANNER', 'WEDGE', BarcodesScanner.tmpTimestamp, BarcodesScanner.tmpData.length);
-        //     BarcodesScanner.tmpTimestamp = 0;
-        //     BarcodesScanner.tmpData = '';
-        // }          
-        barcodeChange();
-    });
-};
+    const init = () => {
+        $(document).on('keypress', function (e) {
+            e.stopPropagation();
+            if (BarcodesScanner.tmpTimestamp < Date.now() - 500) {
+                BarcodesScanner.tmpData = '';
+                BarcodesScanner.tmpTimestamp = Date.now();
+            }
+            if (e.charCode && e.charCode > 0) {
+                BarcodesScanner.tmpData += String.fromCharCode(e.charCode);
+            }
+            // var keycode = (e.keyCode ? e.keyCode : e.which);
+            // if (keycode == 13 && BarcodesScanner.tmpData.length > 0){
+            //     onScannerNavigate(BarcodesScanner.tmpData, 'FAKE_SCANNER', 'WEDGE', BarcodesScanner.tmpTimestamp, BarcodesScanner.tmpData.length);
+            //     BarcodesScanner.tmpTimestamp = 0;
+            //     BarcodesScanner.tmpData = '';
+            // }          
+            barcodeChange();
+        });
+    };
 
-barcodeHandler();
+    return {
+        init
+    };
+})();
+
+var bookHandler = (function(){
+    var books = {};
+    var loadBookInfo = () => {
+        $.getJSON("/data/zing-books.json", function(data) {
+            books = data.books;
+            console.log(books);
+        });
+    };
+
+    var getBookInfo = (id) => {
+        return books[id];
+    };
+    return {
+        loadBookInfo,
+        getBookInfo
+    };
+})();
 
