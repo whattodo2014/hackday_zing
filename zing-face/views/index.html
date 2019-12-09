@@ -156,9 +156,9 @@
                         <div class="select">
                             <label for="videoSource">Video source: </label><select id="videoSource">
                             <option value="d080f6126e231632db8c0a8f490c7e2f6f5396b269fcf10bf36353db2de124bb"></option>
-                        </select>
+                        </select>                        
                         </div>
-                        -->
+                        -->                    
                     </div>
                 </div>
             </div>
@@ -209,8 +209,14 @@
 </section>
 <section>
         <div class="side-by-side" >
+              <div class="select">
+                <label for="videoSource">Video source: </label>
+                <select id="videoSource" style="display: block;">
+                  <option value="d080f6126e231632db8c0a8f490c7e2f6f5396b269fcf10bf36353db2de124bb"></option>
+                </select>
+              </div>            
                 <!-- face_detector_selection_control -->
-                <div id="face_detector_selection_control" class="row input-field" style="margin-right: 20px;">
+                <div id="face_detector_selection_control" class="input-field" style="margin-right: 20px;">
                   <select id="selectFaceDetector">
                     <option value="ssd_mobilenetv1">SSD Mobilenet V1</option>
                     <option value="tiny_face_detector">Tiny Face Detector</option>
@@ -567,6 +573,57 @@
             stream => videoEl.srcObject = stream,
             err => console.error(err)
           )
+        }
+
+        var videoElement = document.querySelector('video');
+        var videoSelect = document.querySelector('select#videoSource');
+
+        videoSelect.onchange = getStream;
+
+        getStream().then(getDevices).then(gotDevices);
+
+        function getDevices() {
+          // AFAICT in Safari this only gets default devices until gUM is called :/
+          return navigator.mediaDevices.enumerateDevices();
+        }
+
+        function gotDevices(deviceInfos) {
+          window.deviceInfos = deviceInfos; // make available to console
+          console.log('Available input and output devices:', deviceInfos);
+          for (const deviceInfo of deviceInfos) {
+            const option = document.createElement('option');
+            option.value = deviceInfo.deviceId;
+            if (deviceInfo.kind === 'videoinput') {
+              option.text = deviceInfo.label || `Camera ${videoSelect.length + 1}`;
+              videoSelect.appendChild(option);
+            }
+          }
+        }
+
+        function getStream() {
+          if (window.stream) {
+            window.stream.getTracks().forEach(track => {
+              track.stop();
+            });
+          }
+          const videoSource = videoSelect.value;
+          const constraints = {
+            video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+          };
+          return navigator.mediaDevices.getUserMedia(constraints).
+            then(gotStream).catch(handleError);
+        }
+
+        function gotStream(stream) {
+          window.stream = stream; // make stream available to console
+
+          videoSelect.selectedIndex = [...videoSelect.options].
+            findIndex(option => option.text === stream.getVideoTracks()[0].label);
+          videoElement.srcObject = stream;
+        }
+
+        function handleError(error) {
+          console.error('Error: ', error);
         }
     
         $(document).ready(function() {
