@@ -164,6 +164,19 @@ var zingLib = (function () {
         return document.querySelector("#recoged_name_elem").innerHTML;
     };
 
+    var getMdcUserName = () => {
+        var currName = document.querySelector("#recoged_name_elem").innerHTML;
+        const mappipng = {
+            "RuotongQi": "sztestqi",
+            "RongjiSu": "admin",
+            "GeLi": "admin_at",
+            "FangchaoDong": "sztest951@moodys.com"
+        }
+
+        var mdcName = mappipng[currName]||"iDontKnow";
+        return mdcName
+    };
+
     var getBookId = () => {
         return document.querySelector("#book_id").innerHTML;
     };
@@ -179,7 +192,7 @@ var zingLib = (function () {
     var redirectToMdc = () => {
         // document.location = "http://www.moodys.com?username=" + getUserName();
         window.open(
-            "http://www.moodys.com?username=" + getUserName(),
+            "http://www.moodys.com?username=" + getMdcUserName(),
             '_blank' // <- This is what makes it open in a new window.
           );
     }
