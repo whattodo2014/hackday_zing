@@ -72,7 +72,7 @@
 <header id="header_outer">
     <div class="container">
         <div class="header_section">
-            <div class="logo"><a href="javascript:void(0)"><img src="img/logozing.png" alt="" width="120px"></a></div>
+            <div class="logo"><a href="/"><img src="img/logozing.png" alt="" width="120px"></a></div>
             <div class="nav" id="nav">
 
                 <ul class="toggle">
@@ -112,7 +112,9 @@
 
                             <div id="book_info">Please scan a book</div>
                             <div id="book_id" style="display:hidden"></div>
-                            <a href="#service" class="learn_more2">Learn more</a></div>
+                            <a href="/details" class="learn_more2">View Details</a></div>
+                            <div id="result_panel" style="margin-top: 20px;font-size: 30px; color: chocolate"></div>
+                            <!-- <div><a href="/details">view details</a></div> -->
                     </div>
                     <div class="col-lg-9 col-sm-8">
                             <!-- <div class="center-content page-container"> -->
@@ -166,7 +168,7 @@
                 <div class="col-lg-3">
                     <div class="service_block">
                         <div class="service_icon delay-03s animated wow zoomIn">
-                            <span><a href="javascript:void(0)" onclick="$.zingLib.borrow('lig', '9787302223852')"><i class="fa-book" href=""></i></a></span>
+                            <span><a href="javascript:void(0)" onclick="$.zingLib.borrow($.zingLib.getUserName(), $.zingLib.getBookId())"><i class="fa-book" href=""></i></a></span>
                         </div>
                         <!--<h3 class="animated fadeInUp wow">Quick TurnAround</h3>-->
                         <h3>Borrow</h3>
@@ -176,7 +178,7 @@
                     <div class="service_block">
                         <div class="service_icon icon2  delay-03s animated wow zoomIn">
                                 
-                            <span onclick="$.zingLib.returnBook('lig', '9787302223852')"><i class="fa-book"></i></span>
+                            <span onclick="$.zingLib.returnBook($.zingLib.getUserName(), $.zingLib.getBookId())"><i class="fa-book"></i></span>
                         </div>
                         <h3>Return</h3>
                     </div>
@@ -184,7 +186,7 @@
                 <div class="col-lg-3">
                     <div class="service_block">
                         <div class="service_icon icon3  delay-03s animated wow zoomIn">
-                            <span onclick="$.zingLib.shareBook('lig', '53')"><i class="fa-recycle"></i></span></div>
+                            <span onclick="$.zingLib.shareBook($.zingLib.getUserName(), $.zingLib.getBookId())"><i class="fa-recycle"></i></span></div>
                         <h3>Share</h3>
                     </div>
                 </div>

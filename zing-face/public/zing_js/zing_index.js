@@ -133,26 +133,36 @@ var zingLib = (function () {
         const [borrow] = actions;
         const res = await post(userId, borrow, { bookId });
         const { success } = await res.json();
-        console.log(userId + "aha" + bookId + "ss=" + success);
+        console.log('userid='+userId + ";bookid=" + bookId + ";result=" + success);
+
+        if (success) {
+            updateResultPanel('You are all set! Enjoy reading!')
+        }
     };
 
     var returnBook = async (userId, bookId) => {
         const [, returnAction] = actions;
         const res = await post(userId, returnAction, { bookId });
         const { success } = await res.json();
-        console.log(userId + "aha" + bookId + "ss=" + success);
+        console.log('userid='+userId + ";bookid=" + bookId + ";result=" + success);
+
+        if (success) {
+            updateResultPanel('Thank you!')
+        }
     }; 
     var shareBook =  async (userId, bookId) => {
         const [, , share] = actions;
         const res = await post(userId, share, { bookId, bookName: "ligtet", bookDetails: [] });
         const { success } = await res.json();
         console.log(userId + "aha" + bookId + "ss=" + success);
+        if (success) {
+            updateResultPanel('Thank you for sharing!')
+        }
     }; 
-    return {
-        borrow,
-        returnBook,
-        shareBook
-    }
+
+    var getUserName = () => {
+        return document.querySelector("#recoged_name_elem").innerHTML;
+    };
 
     var getBookId = () => {
         return document.querySelector("#book_id").innerHTML;
@@ -161,8 +171,15 @@ var zingLib = (function () {
     var getBookInfo = () => {
         return document.querySelector("#book_info").innerHTML;
     };
+
+    var updateResultPanel = (result) => {
+        document.querySelector("#result_panel").innerHTML = result;
+    }
     return {
         borrow,
+        returnBook,
+        shareBook,
+        getUserName,
         getBookId,
         getBookInfo
     };
