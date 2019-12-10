@@ -30,17 +30,18 @@ def get_face_detect_data(data):
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     # image_data = detectImage(img)
     image_data = detectImage2(img)
-    return base64_encode(image_data)
+    # return base64_encode(image_data)
+    return image_data
 
 def detectImage2(img):
     from main.webcam_faster import detectFace
-    image = detectFace(img)
+    name, image = detectFace(img)
     output = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     buffer = BytesIO()
     img = Image.fromarray(output)
     img.save(buffer, format="png")
     encoded_string = base64.b64encode(buffer.getvalue())
-    return encoded_string
+    return name + "|" + base64_encode(encoded_string)
 
 def detectImage(image):
     image = imutils.resize(image, width=500)

@@ -232,10 +232,13 @@ var barcodeHandler = (function() {
         };
     }
     
-    var handleBancodeChange = () => {
+    var handleBancodeChange = async () => {
         var barcode = BarcodesScanner.tmpData;
         console.log(barcode);
         var bookInfo = bookHandler.getBookInfo(barcode);
+        if (!bookInfo) {
+            bookInfo = await bookHandler.getBookInfoForWeb(barcode);
+        }
         var bookInfoText = bookInfo ? bookInfo.details.join('</br>') : barcode;
         document.querySelector("#book_info").innerHTML = bookInfoText;
     };
@@ -279,9 +282,44 @@ var bookHandler = (function(){
     var getBookInfo = (id) => {
         return books[id];
     };
+
+    var getBookInfoForWeb = async (id) => {
+        var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + id;
+        var response = await fetch(url, {credentials: 'include'});
+        var jsonResult = await response.json();
+        try {
+            var info = jsonResult.items[0].volumeInfo;
+            var textSnippet = jsonResult.items[0].searchInfo.textSnippet;
+            var title = info.title;
+            var authors = info.authors.join(', ');
+            var description = info.description;
+            var arr = [];
+            arr.push(title);
+            arr.push(authors);
+            arr.push(description);
+            arr.push(textSnippet);
+            return {details: arr};
+        }
+        catch (e) {
+            return "";
+        }
+    };
     return {
         loadBookInfo,
-        getBookInfo
+        getBookInfo,
+        getBookInfoForWeb,
     };
 })();
+
+var zingLib = (function(){
+    var borrow = () => {
+
+        console.log();
+    };
+    return {
+        borrow
+    };
+})();
+
+window.zingLib = zingLib;
 

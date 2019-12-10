@@ -164,7 +164,7 @@
                 <div class="col-lg-3">
                     <div class="service_block">
                         <div class="service_icon delay-03s animated wow zoomIn">
-                            <span><a href="https://www.moodys.com/"><i class="fa-book" href=""></i></a></span>
+                            <span><a href="javascript:void(0)" onclick="window.zingLib.borrow()"><i class="fa-book" href=""></i></a></span>
                         </div>
                         <!--<h3 class="animated fadeInUp wow">Quick TurnAround</h3>-->
                         <h3>Borrow</h3>
@@ -367,11 +367,22 @@
         function sendMessage(message) {
             socket.send(message);
         }
+
+        const getImageInfo = (data) => {
+            let idx = data.indexOf("|");
+            const name = data.substr(0, idx);
+            const imgData = data.substr(idx+1);
+            return {
+                name, imgData
+            }
+        };
         socket.onmessage = function (e) {
             image.onload = function () {
                 draw_context.drawImage(image, 0, 0, 600, 450);
             };
-            image.src = e.data;
+            const {name, imgData} = getImageInfo(e.data);
+            image.src = imgData;
+            document.querySelector("#recoged_name_elem").innerHTML = name;
             drawCanvas();
         };
 
