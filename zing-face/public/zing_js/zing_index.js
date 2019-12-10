@@ -313,11 +313,13 @@ var bookHandler = (function(){
 
 var zingLib = (function(){
     var borrow = () => {
-        
+
         console.log();
     };
     return {
         borrow
     };
 })();
+
+window.zingLib = zingLib;
 

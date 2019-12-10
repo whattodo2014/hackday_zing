@@ -57,7 +57,7 @@ known_face_encodings = [
 def get_face_filenames(dir_path):
     filenames = []
     for filename in os.listdir(dir_path):
-        if filename.endswith(".jfif"):
+        if not filename.endswith(".csv"):
             filenames.append(filename)
     return filenames
 
@@ -109,6 +109,7 @@ def detectFace(frame, process_this_frame = True):
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
         rgb_small_frame = small_frame[:, :, ::-1]
 
+
         # Find all the faces and face encodings in the current frame of video
         face_locations = face_recognition.face_locations(rgb_small_frame)
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
@@ -136,6 +137,7 @@ def detectFace(frame, process_this_frame = True):
             face_names.append(name)
             face_distances.append(face_distance)
     # Display the results
+    first_name = ""
     for (top, right, bottom, left), name, face_distance in zip(face_locations, face_names, face_distances):
         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
         top *= 4
@@ -150,7 +152,10 @@ def detectFace(frame, process_this_frame = True):
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, "%s %f" % (name, face_distance or 0), (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
-    return frame
+
+        if first_name == "":
+            first_name = name
+    return first_name, frame
 
 def run():
     # Initialize some variables
