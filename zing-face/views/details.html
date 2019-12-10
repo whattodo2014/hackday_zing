@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style type="text/css">
+    .ui-button.ui-state-active:hover {
+        border: 1px solid #003eff;
+        background: #2684C3;
+        font-weight: normal;
+        color: #ffffff;
+    }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $.getJSON("/data/zing-books.json", function(data) {
+                var availableDataSet = Object.values(data.books)
+                    .filter(e => e.available)
+                    .map(e => e.details);
+                $("#availableList").DataTable({
+                    data: availableDataSet,
+                    columns: [
+                        { title: "Book Name" },
+                        { title: "Book Desc" },
+                        { title: "Book Language" }
+                    ]
+                });
+                var userId = "0000-0000-0000-0000";
+                var userSource = data.userBorrow[userId];
+                var borrowDataSet = Object.entries(userSource.bookList).reduce((acc, [bookId, borrowDate]) => {
+                    const [bookName] = data.books[bookId].details
+                    const result = [bookName, borrowDate, bookId];
+                    return [
+                        ...acc,
+                        result
+                    ]
+                }, []);
+                $("#borrowList").DataTable({
+                    data: borrowDataSet,
+                    columns: [
+                        { title: "Book Name" },
+                        { title: "Borrow Date" },
+                        { title: "Book Id" }
+                    ]
+                });
+            });
+            $("#tabs").tabs();
+        });
+    </script>
+</head>
+
+<body>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Available</a></li>
+            <li><a href="#tabs-2">Borrowed</a></li>
+        </ul>
+        <div id="tabs-1">
+            <table id="availableList" class="display" style="width:100%">
+            </table>
+        </div>
+        <div id="tabs-2">
+            <table id="borrowList" class="display" style="width:100%">
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

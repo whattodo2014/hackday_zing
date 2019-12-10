@@ -83,27 +83,25 @@
 <header id="header_outer">
     <div class="container">
         <div class="header_section">
-            <div class="logo"><a href="javascript:void(0)"><img src="img/logob.png" alt=""></a></div>
-            <nav class="nav" id="nav">
+            <div class="logo"><a href="javascript:void(0)"><img src="img/zinglogo.png" alt="" width="120px"></a></div>
+            <div class="nav" id="nav">
+
                 <ul class="toggle">
                     <li><a href="#top_content">Home</a></li>
                     <li><a href="#service">Services</a></li>
-                    <li><a href="#work_outer">Work</a></li>
-                    <li><a href="#Portfolio">Portfolio</a></li>
-                    <li><a href="#client_outer">Clients</a></li>
-                    <li><a href="#team">Team</a></li>
+                    <li><a href="#work_outer"></a></li>
+                    <li><a href="#Portfolio"></a></li>
+                    <li><a href="#client_outer"></a></li>
+                    <li><a href="#team"></a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <ul class="">
                     <li><a href="#top_content">Home</a></li>
                     <li><a href="#service">Services</a></li>
-                    <li><a href="#work_outer">Work</a></li>
-                    <li><a href="#Portfolio">Portfolio</a></li>
-                    <li><a href="#client_outer">Clients</a></li>
-                    <li><a href="#team">Team</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-            </nav>
+
+            </div>
             <a class="res-nav_click animated wobble wow" href="javascript:void(0)"><i class="fa-bars"></i></a></div>
     </div>
 </header>
@@ -115,18 +113,19 @@
         <div class="container">
             <div class="top_content">
                 <div class="row">
-                    <div class="col-lg-5 col-sm-7">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="top_left_cont flipInY wow animated">
                             <h3>Zing!Face</h3>
-                            <h2>Hi,Ruotong</h2>
+                            <h2>Hi, <span id="recoged_name_elem">there</span></h2>
                             <!--<p> Accusantium quam, aliquam ultricies eget tempor id, aliquam eget nibh et. Maecen aliquam, risus at semper. Proin iaculis purus consequat sem cure digni ssim. Donec porttitora entum. </p>-->
+
+
+                            <div id="book_info"></div>
                             <a href="#service" class="learn_more2">Learn more</a></div>
                     </div>
-                    <div class="col-lg-7 col-sm-5">
+                    <div class="col-lg-9 col-sm-8">
                             <!-- <div class="center-content page-container"> -->
                             <div class="">
-
-
                                     <div class="progress" id="loader">
                                       <div class="indeterminate"></div>
                                     </div>
@@ -156,9 +155,9 @@
                         <div class="select">
                             <label for="videoSource">Video source: </label><select id="videoSource">
                             <option value="d080f6126e231632db8c0a8f490c7e2f6f5396b269fcf10bf36353db2de124bb"></option>
-                        </select>
+                        </select>                        
                         </div>
-                        -->
+                        -->                    
                     </div>
                 </div>
             </div>
@@ -198,8 +197,10 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="service_block">
-                        <div class="service_icon icon4  delay-03s animated wow zoomIn"><span><i
-                                class="fa-search"></i></span></div>
+                        <div class="service_icon icon4  delay-03s animated wow zoomIn">
+                            <span><a href="/details"><i
+                                class="fa-search"></i></a></span>
+                        </div>
                         <h3>Search</h3>
                     </div>
                 </div>
@@ -208,10 +209,15 @@
     </div>
 </section>
 <section>
-        <div class="row side-by-side">
-                                
+        <div class="side-by-side" >
+              <div class="select">
+                <label for="videoSource">Video source: </label>
+                <select id="videoSource" style="display: block;">
+                  <option value="d080f6126e231632db8c0a8f490c7e2f6f5396b269fcf10bf36353db2de124bb"></option>
+                </select>
+              </div>            
                 <!-- face_detector_selection_control -->
-                <div id="face_detector_selection_control" class="row input-field" style="margin-right: 20px;">
+                <div id="face_detector_selection_control" class="input-field" style="margin-right: 20px;">
                   <select id="selectFaceDetector">
                     <option value="ssd_mobilenetv1">SSD Mobilenet V1</option>
                     <option value="tiny_face_detector">Tiny Face Detector</option>
@@ -322,19 +328,19 @@
     });
 </script>
 <script>
-    wow = new WOW({
-        animateClass: 'animated',
-        offset: 100
-    });
-    wow.init();
-    document.getElementById('').onclick = function () {
-        var section = document.createElement('section');
-        section.className = 'wow fadeInDown';
-        section.className = 'wow shake';
-        section.className = 'wow zoomIn';
-        section.className = 'wow lightSpeedIn';
-        this.parentNode.insertBefore(section, this);
-    };
+    // wow = new WOW({
+    //     animateClass: 'animated',
+    //     offset: 100
+    // });
+    // wow.init();
+    // document.getElementById('').onclick = function () {
+    //     var section = document.createElement('section');
+    //     section.className = 'wow fadeInDown';
+    //     section.className = 'wow shake';
+    //     section.className = 'wow zoomIn';
+    //     section.className = 'wow lightSpeedIn';
+    //     this.parentNode.insertBefore(section, this);
+    // };
 </script>
 <script type="text/javascript">
     $(window).load(function () {
@@ -437,122 +443,7 @@
 
 <!--face reg-->
 
-<script>
-        let faceMatcher = null
-    
-        async function updateResults() {
-          if (!isFaceDetectionModelLoaded()) {
-            return
-          }
-    
-          const inputImgEl = $('#inputImg').get(0)
-    
-          const options = getFaceDetectorOptions()
-          const results = await faceapi
-            .detectAllFaces(inputImgEl, options)
-            .withFaceLandmarks()
-            .withFaceDescriptors()
-    
-          drawFaceRecognitionResults(results)
-        }
-    
-        async function onPlay(videoEl) {
-          if(!videoEl.currentTime || videoEl.paused || videoEl.ended || !isFaceDetectionModelLoaded())
-            return setTimeout(() => onPlay(videoEl))
-    
-    
-          const options = getFaceDetectorOptions()
-    
-          const ts = Date.now()
-    
-          /*
-          const drawBoxes = withBoxes
-          const drawLandmarks = withFaceLandmarks
-    */
-          // let task = faceapi.detectAllFaces(videoEl, options)
-          // task = withFaceLandmarks ? task.withFaceLandmarks() : task
-          // const results = await task
-    
-          const results = await faceapi
-            .detectAllFaces(videoEl, options)
-            .withFaceLandmarks()
-            .withFaceDescriptors()
-    
-          drawFaceRecognitionResults(results, videoEl)
-    /*
-          updateTimeStats(Date.now() - ts)
-    
-          const canvas = $('#overlay').get(0)
-          const dims = faceapi.matchDimensions(canvas, videoEl, true)
-    
-          const resizedResults = faceapi.resizeResults(results, dims)
-          if (drawBoxes) {
-            faceapi.draw.drawDetections(canvas, resizedResults)
-          }
-          if (drawLandmarks) {
-            faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
-          }
-    */
-          setTimeout(() => onPlay(videoEl))
-        }
-    
-        function drawFaceRecognitionResults(results, videoEl) {
-          const canvas = $('#overlay').get(0)
-          /*
-          const inputImgEl = $('#inputImg').get(0)
-    
-          faceapi.matchDimensions(canvas, inputImgEl)
-          // resize detection and landmarks in case displayed image is smaller than
-          // original size
-          const resizedResults = faceapi.resizeResults(results, inputImgEl)
-          */
-    
-          const dims = faceapi.matchDimensions(canvas, videoEl, true)
-          const resizedResults = faceapi.resizeResults(results, dims)
-    
-          resizedResults.forEach(({ detection, descriptor }) => {
-            const label = faceMatcher.findBestMatch(descriptor).toString()
-            const options = { label }
-            const drawBox = new faceapi.draw.DrawBox(detection.box, options)
-            drawBox.draw(canvas)
-          })
-        }
-    
-        async function run() {
-          // load face detection, face landmark model and face recognition models
-          await changeFaceDetector(selectedFaceDetector)
-          await faceapi.loadFaceLandmarkModel('/')
-          await faceapi.loadFaceRecognitionModel('/')
-    
-          // initialize face matcher with 1 reference descriptor per bbt character
-          faceMatcher = await createBbtFaceMatcher(1)
-    
-          // start processing image
-          //rongji
-          // updateResults()
-    
-          changeInputSize(416)
-    
-          // start processing frames
-          //onPlay($('#inputVideo').get(0))
-          
-          // try to access users webcam and stream the images
-          // to the video element
-          const videoEl = document.getElementById('inputVideo')
-          navigator.getUserMedia(
-            { video: {} },
-            stream => videoEl.srcObject = stream,
-            err => console.error(err)
-          )
-        }
-    
-        $(document).ready(function() {
-          // renderNavBar('#navbar', 'bbt_face_recognition')
-          // initImageSelectionControls()
-          initFaceDetectionControls()
-          run()
-        })
-      </script>
+<script type="text/javascript" src="/zing_js/zing_index.js"></script>
 
 </body>
 </html>
