@@ -43,9 +43,9 @@
                         { title: "Book Language" }
                     ]
                 });
-                var userId = "0000-0000-0000-0000";
+                var userId = "lig";
                 var userSource = data.userBorrow[userId];
-                var borrowDataSet = Object.entries(userSource.bookList).reduce((acc, [bookId, borrowDate]) => {
+                var borrowDataSet = Object.entries(userSource).reduce((acc, [bookId, borrowDate]) => {
                     const [bookName] = data.books[bookId].details
                     const result = [bookName, borrowDate, bookId];
                     return [
