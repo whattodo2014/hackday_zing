@@ -42,6 +42,7 @@ var barcodeHandler = (function () {
         }
         var bookInfoText = bookInfo ? bookInfo.details.join('</br>') : barcode;
         document.querySelector("#book_info").innerHTML = bookInfoText;
+        document.querySelector("#book_id").innerHTML = barcode;
     };
 
     const barcodeChange = debounce(handleBancodeChange, 200);
@@ -134,6 +135,7 @@ var zingLib = (function () {
         const { success } = await res.json();
         console.log(userId + "aha" + bookId + "ss=" + success);
     };
+
     var returnBook = async (userId, bookId) => {
         const [, returnAction] = actions;
         const res = await post(userId, returnAction, { bookId });
@@ -150,6 +152,19 @@ var zingLib = (function () {
         borrow,
         returnBook,
         shareBook
+    }
+
+    var getBookId = () => {
+        return document.querySelector("#book_id").innerHTML;
+    };
+
+    var getBookInfo = () => {
+        return document.querySelector("#book_info").innerHTML;
+    };
+    return {
+        borrow,
+        getBookId,
+        getBookInfo
     };
 })();
 
