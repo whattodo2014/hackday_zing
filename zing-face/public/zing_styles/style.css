@@ -208,7 +208,7 @@ p{
 	
 .top_content{
 	position:relative;
-	padding-top: 20px;
+	padding: 10px 0;
 	}
 	
 .white_pad{
@@ -294,7 +294,7 @@ a.learn_more2:hover{
 	}
 
 .service_area{
-	padding:40px 0 40px; 
+	padding:20px 0 20px; 
 	}
 	
 .service_section{

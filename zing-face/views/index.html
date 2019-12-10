@@ -118,7 +118,7 @@
                             
                     <div class="col s6">
                         <div class="card">
-                            <div class="card-content center-align">
+                            <div class="card-content center-align" style="margin-left: 150px;">
                                 <video id="video" width="600" height="450" autoplay style="display:none"></video>
                                 <canvas id="canvas" width="600" height="450" class="hide"></canvas>
                                 <!-- <button type="button" class="btn" id="start-stream" style="margin-bottom: 10px">Start Face Detection</button> -->
@@ -165,7 +165,7 @@
                 <div class="col-lg-3">
                     <div class="service_block">
                         <div class="service_icon delay-03s animated wow zoomIn">
-                            <span><a href="javascript:void(0)" onclick="window.zingLib.borrow()"><i class="fa-book" href=""></i></a></span>
+                            <span><a href="javascript:void(0)" onclick="$.zingLib.borrow()"><i class="fa-book" href=""></i></a></span>
                         </div>
                         <!--<h3 class="animated fadeInUp wow">Quick TurnAround</h3>-->
                         <h3>Borrow</h3>
@@ -240,7 +240,7 @@
     //     this.parentNode.insertBefore(section, this);
     // };
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(window).load(function () {
 
         $('a').bind('click', function (event) {
@@ -258,7 +258,7 @@
             event.preventDefault();
         });
     })
-</script>
+</script> -->
 
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
@@ -387,7 +387,7 @@
             drawCanvas();
         };
 
-        setTimeout(() => drawCanvas(), 1000)
+        // setTimeout(() => drawCanvas(), 1000)
     })
 </script>
 </body>
