@@ -74,11 +74,12 @@ def save_face_encoding_to_csv():
 def load_face_encoding_from_csv():
     global known_face_names
     global known_face_encodings
-    matrix = np.genfromtxt(cache_face_csv_file_name, delimiter=',', dtype=None)
+    matrix = np.genfromtxt(cache_face_csv_file_name, delimiter=',', dtype=None, encoding='ascii')
+    
     known_face_names = []
     known_face_encodings = []
     for row in matrix:
-        known_face_names.append(row[0].decode('utf-8'))
+        known_face_names.append(row[0]) # .decode('utf-8')
         data = [row[i] for i in range(1, len(row))]
         known_face_encodings.append(np.array(data, dtype=float))
 
