@@ -149,9 +149,9 @@ def detectFace(frame, process_this_frame = True):
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 
         # Draw a label with a name below the face
-        cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+        cv2.rectangle(frame, (left, bottom - 25), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
-        cv2.putText(frame, "%s %f" % (name, face_distance or 0), (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
+        cv2.putText(frame, "%s %f" % (name, face_distance or 0), (left + 6, bottom - 6), font, 0.6, (255, 255, 255), 1)
 
         if first_name == "":
             first_name = name
