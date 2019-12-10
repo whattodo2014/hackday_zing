@@ -174,14 +174,24 @@ var zingLib = (function () {
 
     var updateResultPanel = (result) => {
         document.querySelector("#result_panel").innerHTML = result;
+    };
+
+    var redirectToMdc = () => {
+        // document.location = "http://www.moodys.com?username=" + getUserName();
+        window.open(
+            "http://www.moodys.com?username=" + getUserName(),
+            '_blank' // <- This is what makes it open in a new window.
+          );
     }
+
     return {
         borrow,
         returnBook,
         shareBook,
         getUserName,
         getBookId,
-        getBookInfo
+        getBookInfo,
+        redirectToMdc
     };
 })();
 
