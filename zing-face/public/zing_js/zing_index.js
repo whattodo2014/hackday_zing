@@ -115,12 +115,12 @@ var bookHandler = (function(){
 var zingLib = (function(){
     var borrow = () => {
 
-        console.log();
+        console.log("aha");
     };
     return {
         borrow
     };
 })();
 
-window.zingLib = zingLib;
+$.zingLib = zingLib;
 
